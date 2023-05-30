@@ -7,16 +7,16 @@
         <div class="mlist">
             <div class="swiper-container" id="musicSwiper">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide" v-for="item in musicls.musics" :key="item.id">
+                    <router-link :to="{ path:'/listview',query:{id:item.id} }" class="swiper-slide" v-for="item in musicls.musics" :key="item.id">
                         <img :src="item.picUrl" alt="">
                         <div class="name">{{ item.name }}</div>
                         <div class="count">
                             <svg class="icon" aria-hidden="true">
-                            <use xlink:href="#icon-fanjutuijian"></use>
+                            <use xlink:href="#icon-bofang1"></use>
                             </svg>
                             <span>{{ changeValue(item.playCount) }}</span>
                         </div>
-                    </div>
+                    </router-link>
                 </div>
             </div>
         </div>
@@ -26,26 +26,26 @@
 <script>
 import "swiper/css/swiper.css"
 import Swiper from "swiper"
-import { onMounted,onUpdated,reactive } from "vue"
+import { onMounted, onUpdated, reactive } from "vue"
 import { getMusic } from "@/api/index.js"   //@-->src目录
 export default {
     name: "musiclist",
     setup() {
-        function changeValue(num){
+        function changeValue(num) {
             var res = 0;
-            if(num>100000000){
-                res = num/100000000;
+            if (num > 100000000) {
+                res = num / 100000000;
                 res = res.toFixed(2) + "亿";
-            }else if(num>=10000){
-                res = num/10000;
+            } else if (num >= 10000) {
+                res = num / 10000;
                 res = res.toFixed(2) + "万";
-            }else{
+            } else {
                 res = num;
             }
             return res;
         }
-        const musicls = reactive({ musics:[] });
-         onMounted(async() => {   //view与model绑定成功之后
+        const musicls = reactive({ musics: [] });
+        onMounted(async () => {   //view与model绑定成功之后
             var res = await getMusic(10);
             musicls.musics = res.data.result;
             console.log(musicls.musics);
@@ -54,9 +54,9 @@ export default {
             var swiper = new Swiper("#musicSwiper", {
                 slidesPerView: 3,     //一屏显示几个滑块
                 spaceBetween: 10
+            })
         })
-    })
-    return {musicls,changeValue}
+        return { musicls, changeValue }
     }
 }
 </script>

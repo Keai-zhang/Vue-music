@@ -2,7 +2,21 @@
   <nav>
   </nav>
   <router-view />
+  <play-controller></play-controller>
 </template>
+
+<script>
+import playController from './components/Playcontroller.vue';
+
+export default {
+  components:{
+    playController
+  }
+}
+
+
+
+</script>
 
 <style lang="less">
 * {
